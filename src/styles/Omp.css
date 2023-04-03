@@ -1,0 +1,16 @@
+.omp {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border: 2px solid black;
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.omp-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}

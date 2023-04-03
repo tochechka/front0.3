@@ -1,0 +1,38 @@
+.top-container {
+    position: sticky;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    margin-left: 20px;
+    top: 0;
+}
+
+.top-button {
+    border: 1px solid black;
+    font-weight: 700;
+    font-size: 14px;
+    height: 27px;
+    line-height: 17px;
+    text-transform: uppercase;
+    margin-left: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.top-button:active {
+    background-color: gray;
+    color: #FFFFFF;
+}
+
+.top-button:hover {
+    background-color: gray;
+    color: #FFFFFF;
+}
+
+.line {
+    margin-top: 10px;
+    border: 2px solid black;
+}
+

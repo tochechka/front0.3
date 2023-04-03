@@ -1,0 +1,59 @@
+.add-row {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 15px;
+    margin-left: 20px;
+}
+
+.add-box {
+    max-width: 185px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+.add-text {
+    font-weight: 550;
+    font-size: 14px;
+    margin-top: 5px;
+    color: black;
+}
+
+.add-input {
+    width: 100%;
+    margin-right: 15px;
+}
+
+.check-input {
+    color: black;
+    align-items: center;
+    justify-content: center;
+    margin-right: 30px;
+}
+
+.send-button {
+    border: 1px solid black;
+    font-weight: 700;
+    font-size: 14px;
+    height: 27px;
+    line-height: 17px;
+    text-transform: uppercase;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 10px;
+}
+
+.send-button:active {
+    background-color: gray;
+    color: #FFFFFF;
+}
+
+.send-button:hover {
+    background-color: gray;
+    color: #FFFFFF;
+}
+
