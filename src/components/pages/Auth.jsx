@@ -2,6 +2,7 @@ import React, {useRef, useState} from 'react';
 import '../../styles/Auth.css';
 import { useNavigate } from 'react-router-dom';
 import apiClient from "../../api";
+import axios from "axios";
 
 const Auth = () => {
     const history = useNavigate();
@@ -26,9 +27,24 @@ const Auth = () => {
                 history('/menu')
             })
             .catch((error) => {
+                if(error.response.status === 404){
+                    console.log("я свой рот ебал")
+                    console.log(error.response.status)
+                    history('/menu')
+                }
+            });
+    }
+
+    function fuck() {
+        axios.create()
+            .post('http://109.62.134.146:8666/secured/213', {}, {auth: {username: "tuchechka", password: "12345678"}, withCredentials: true})
+            .then(() => {
+                console.log('Authenticated');
+            })
+            .catch((error) => {
                 if(error.code !== 401){
                     console.log("я свой рот ебал")
-                    history('/menu')
+                    console.log(error)
                 }
             });
     }
@@ -54,6 +70,7 @@ const Auth = () => {
                     <button className="log-button" onClick={auth}>
                         Входная кнопка
                     </button>
+                    <button onClick={fuck}>fuck me</button>
                 </div>
             </div>
         </div>
