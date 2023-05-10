@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import apiClient from "../../api";
+import '../../styles/CreateOmp.css'
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const ChangeCrExp = ({id, get, omvd, type, date, active, setActive, omp, lastName, ompId}) => {
     const [modOmvd, setModOmvd] = useState(omvd);
@@ -7,6 +8,7 @@ const ChangeCrExp = ({id, get, omvd, type, date, active, setActive, omp, lastNam
     const [modDate, setModDate] = useState(date);
     const [modLastName, setModLastName] = useState(lastName);
     const [modTYpe, setModType] = useState(type);
+    const axiosPrivate = useAxiosPrivate();
 
     const putExp = (e) => {
         e.preventDefault();
@@ -20,7 +22,7 @@ const ChangeCrExp = ({id, get, omvd, type, date, active, setActive, omp, lastNam
             'expertiseType': modTYpe
         }
 
-        apiClient
+        axiosPrivate
             .put(`/expertises/crime/${id}`, info)
             .then(() => {
                 console.log("Изменилось");

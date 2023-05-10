@@ -1,26 +1,54 @@
 import React, {useEffect, useState} from 'react';
-import apiClient from "../../api";
+import '../../styles/Omp.css'
+import Header from "../Header";
 import OmpList from "../ompParts/OmpList";
-import Top from "../ompParts/Top";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import CreateOmp from "../ompParts/CreateOmp";
+import Report from "../ompParts/Report";
 
 const Omp = () => {
     const [omps, setOmps] = useState([]);
+    const [type, setType] = useState([]);
+    const [omvd, setOmvd] = useState([]);
+    const [modalActive, setModalActive] = useState(false);
+    const [reportActive, setReportActive] = useState(false);
+    const axiosPrivate = useAxiosPrivate();
 
     const getRequest = async () => {
-        apiClient
+        axiosPrivate
             .get('/omps')
             .then((response) => {
                 setOmps(response.data.content)
-                console.log('Загетили')
+                console.log(response.data.content)
+            })
+    }
+
+    const getCrType = async () => {
+        axiosPrivate
+            .get('/directories/CRIME_TYPE/items')
+            .then((response) => {
+                setType(response.data)
+                console.log(response.data)
+            })
+    }
+
+    const getOmvd = async () => {
+        axiosPrivate
+            .get('/directories/OMVD/items')
+            .then((response) => {
+                setOmvd(response.data)
+                console.log(response.data)
             })
     }
 
     useEffect(() => {
         getRequest();
+        getCrType();
+        getOmvd();
     }, [])
 
     const removeOmp = (omp) => {
-        apiClient
+        axiosPrivate
             .delete(`omps/${omp.id}`)
             .then(() => {
                 console.log('Удалилось')
@@ -30,8 +58,35 @@ const Omp = () => {
 
     return (
         <div>
-            <Top get={getRequest}/>
-            <OmpList remove={removeOmp} get={getRequest} omps={omps}/>
+            <Header/>
+            <div style={{display: "flex", paddingTop: 10}}>
+                <div className='left-col'>
+                    <div align='center'>
+                        <span>Действия</span>
+                    </div>
+                    <button className='action'  onClick={() => setModalActive(true)}>
+                        Добавить новую запись
+                    </button>
+                    <button className='action' onClick={() => setReportActive(true)}>
+                        Получить отчет
+                    </button>
+                </div>
+                <div style={{marginLeft: 50}}>
+                    <div className='omp-top-text'>Список осмотров мест преступлений</div>
+                    <OmpList remove={removeOmp} get={getRequest} omps={omps} type={type} omvd={omvd}/>
+                </div>
+            </div>
+            <CreateOmp
+                get={getRequest}
+                type={type}
+                omvd={omvd}
+                active={modalActive}
+                setActive={setModalActive}
+            />
+            <Report
+                active={reportActive}
+                setActive={setReportActive}
+            />
         </div>
     );
 };

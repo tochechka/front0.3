@@ -1,18 +1,31 @@
 import React, {useState} from 'react';
 import '../../styles/Modal.css'
-import '../../styles/Table.css'
+import '../../styles/Report.css'
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const Report = ({active, setActive}) => {
     const [from, setFrom] = useState('');
     const [to, setTo] = useState('');
+    const axiosPrivate = useAxiosPrivate();
+
+    // const report = (e) => {
+    //     e.preventDefault();
+    //     axiosPrivate
+    //         .get(`/reports/omp?from=${from}&to=${to}`)
+    //         .then((response) => {
+    //             window.open(response.data);
+    //         })
+    //         .catch(() => {
+    //         });
+    // }
 
     return (
         <div className={active ? 'modal active' : 'modal'} onClick={() => setActive(false)}>
             <div className='modal-content' onClick={e => e.stopPropagation()}>
-                <div className="pdf-container">
-                    Введите с какое и по какое число необходимо составить отчет
-                    <div className='sub-container'>
-                        <div>
+                <div className="report-container">
+                    <p className='report-text'>Введите с какое и по какое число необходимо составить отчет</p>
+                    <div>
+                        <div className='sub-container'>
                             С
                             <input
                                 style={{marginLeft: 10}}
@@ -21,7 +34,7 @@ const Report = ({active, setActive}) => {
                                 type='date'
                             />
                         </div>
-                        <div>
+                        <div className='sub-container'>
                             По
                             <input
                                 style={{marginLeft: 10}}
@@ -31,8 +44,9 @@ const Report = ({active, setActive}) => {
                             />
                         </div>
                     </div>
-                    <a className='fake-button' onClick={() => setActive(false)} href={`https://api.forensicais.xxcf.cf/reports/omp?from=${from}&to=${to}`} target="_blank" rel="noopener noreferrer">
-                        Составить отчет
+                    <a className='fake-button' onClick={() => setActive(false)}
+                       href={`https://api.forensicais.xxcf.cf/reports/omp?from=${from}&to=${to}`} target="_blank" rel="noopener noreferrer">
+                        Gjkexbnm jnxtn
                     </a>
                 </div>
             </div>

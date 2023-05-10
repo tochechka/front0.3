@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
 import '../../styles/Modal.css'
 import '../../styles/CreateOmp.css';
-import apiClient from "../../api";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
-const ChangeOmp = ({active, setActive, id, number, omvd, dep, arr, date, type, get, dispatched}) => {
+const ChangeOmp = ({active, setActive, id, number, curOmvd, omvd, dep, arr, date, curType, type, get}) => {
+    const axiosPrivate = useAxiosPrivate();
     const [modNumber, setModNumber] = useState(number);
-    const [modOmvd, setModOmvd] = useState(omvd);
+    const [modOmvd, setModOmvd] = useState(curOmvd);
     const [modDep, setModDep] = useState(dep);
     const [modArr, setModArr] = useState(arr);
     const [modDate, setModDate] = useState(date);
-    const [modType, setModType] = useState(type);
+    const [modType, setModType] = useState(curType);
     const [arm, setArm] = useState(false);
     const [shoe, setShoe] = useState(false);
     const [hack, setHack] = useState(false);
@@ -54,7 +55,6 @@ const ChangeOmp = ({active, setActive, id, number, omvd, dep, arr, date, type, g
             "omvd": modOmvd,
             "criminalCaseNumber": modNumber,
             "crimeType": modType,
-            "dispatched": dispatched,
             "withdrawalsHandprints": arm,
             "withdrawalsShoeTracks": shoe,
             "withdrawalsHackingTracks": hack,
@@ -69,7 +69,7 @@ const ChangeOmp = ({active, setActive, id, number, omvd, dep, arr, date, type, g
             "withdrawalsOther": true
         }
 
-        apiClient
+        axiosPrivate
             .put(`/omps/${id}`, info)
             .then(() => {
                 console.log("Изменилось");
@@ -117,12 +117,17 @@ const ChangeOmp = ({active, setActive, id, number, omvd, dep, arr, date, type, g
                         <div className='add-text'>
                             Название омвд
                         </div>
-                        <input
-                            value={modOmvd}
+
+                        <select
                             onChange={e => setModOmvd(e.target.value)}
-                            className='add-input'
-                            type='text'
-                        />
+                        >
+                            <option disabled value=''>Номер омвд</option>
+                            {omvd.map(om =>
+                                <option key={om.value} value={om.value}>
+                                    {om.value}
+                                </option>
+                            )}
+                        </select>
                         <div className='add-text'>
                             Номер дела
                         </div>
@@ -135,12 +140,16 @@ const ChangeOmp = ({active, setActive, id, number, omvd, dep, arr, date, type, g
                         <div className='add-text'>
                             Тип преступления
                         </div>
-                        <input
-                            value={modType}
+                        <select
                             onChange={e => setModType(e.target.value)}
-                            className='add-input'
-                            type='text'
-                        />
+                        >
+                            <option disabled value=''>Тип преступления</option>
+                            {type.map(t =>
+                                <option key={t.value} value={t.value}>
+                                    {t.value}
+                                </option>
+                            )}
+                        </select>
                     </div>
                     <div className='add-box'>
                         <div className='check-input' onClick={toggleArm}>Рук следы <input type='checkbox'/></div>

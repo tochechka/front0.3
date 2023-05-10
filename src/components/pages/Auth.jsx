@@ -1,77 +1,93 @@
-import React, {useRef, useState} from 'react';
-import '../../styles/Auth.css';
+import React, {useRef, useState, useEffect} from 'react';
+import '../../styles/Login.css';
 import { useNavigate } from 'react-router-dom';
 import apiClient from "../../api";
-import axios from "axios";
+import useAuth from "../hooks/useAuth";
 
 const Auth = () => {
+    const {setAuth} = useAuth();
     const history = useNavigate();
+    const loginRef = useRef();
+    const errRef = useRef();
     const [passwordShown, setPasswordShown] = useState(false);
-    const loginRef = useRef(null);
-    const passRef = useRef(null);
+    const [login, setLogin] = useState('');
+    const [pwd, setPwd] = useState('');
+    const [errMsg, setErrMsg] = useState('');
+
+    useEffect(() => {
+        loginRef.current.focus();
+    }, [])
+
+    useEffect(() => {
+        setErrMsg('');
+    }, [login, pwd])
 
     const togglePassword = () => {
         setPasswordShown(!passwordShown);
     }
 
-    function auth() {
-        const login = loginRef.current.value;
-        const password = passRef.current.value;
+    const auth1 = async (e) => {
+        e.preventDefault();
+
+        const info = {
+            'login': login,
+            'password': pwd
+        }
 
         apiClient
-            .post('', {}, {auth: {username: login, password: password}, withCredentials: true})
-            .then(() => {
-                console.log(login)
-                console.log(password)
-                console.log('Authenticated');
-                history('/menu')
+            .post('/auth/login', info)
+            .then((response) =>{
+                const access_token = response.data.access_token;
+                const refresh_token = response.data.refresh_token;
+                setAuth({login, pwd, access_token, refresh_token});
+                console.log('Ура!!! Победа!')
+                history('/omp')
             })
             .catch((error) => {
-                if(error.response.status === 404){
-                    console.log("я свой рот ебал")
-                    console.log(error.response.status)
-                    history('/menu')
+                if(!error?.response) {
+                    setErrMsg('Нет ответа от сервера');
+                } else if (error.response?.status === 400) {
+                    setErrMsg('Отсутствует логин или пароль');
+                } else if (error.response?.status === 401) {
+                    setErrMsg('Неправильные логин или пароль');
+                } else {
+                    setErrMsg('Неудалось войти');
                 }
-            });
-    }
-
-    function fuck() {
-        axios.create()
-            .post('http://109.62.134.146:8666/secured/213', {}, {auth: {username: "tuchechka", password: "12345678"}, withCredentials: true})
-            .then(() => {
-                console.log('Authenticated');
-            })
-            .catch((error) => {
-                if(error.code !== 401){
-                    console.log("я свой рот ебал")
-                    console.log(error)
-                }
+                errRef.current.focus();
             });
     }
 
     return (
-        <div>
-            <div className='auth-container'>
-                <div className="log-col">
-                    <h5 className="item">Логин</h5>
-                    <input
-                        ref={loginRef}
-                        className="element"
-                        placeholder="Логин"
-                    />
-                    <h5 className="item">Пароль</h5>
-                    <input
-                        ref={passRef}
-                        className="element"
-                        type={passwordShown ? 'text' : 'password'}
-                        placeholder="пароль"
-                    />
-                    <input type='checkbox' onClick={togglePassword}/> Показать пароль
-                    <button className="log-button" onClick={auth}>
-                        Входная кнопка
-                    </button>
-                    <button onClick={fuck}>fuck me</button>
-                </div>
+        <div className='auth-container'>
+            <div className="log-col">
+                <h1>Вход</h1>
+                <p ref={errRef} aria-live='assertive'>
+                    {errMsg}
+                </p>
+                <h5 className="item">Логин</h5>
+                <input
+                    className="element"
+                    type='text'
+                    id='login'
+                    ref={loginRef}
+                    autoComplete='off'
+                    onChange={(e) => setLogin(e.target.value)}
+                    value={login}
+                    required
+                />
+                <h5 className="item">Пароль</h5>
+                <input
+                    className="element"
+                    type={passwordShown ? 'text' : 'password'}
+                    id='password'
+                    onChange={(e) => setPwd(e.target.value)}
+                    value={pwd}
+                    required
+                />
+                <input type='checkbox' onClick={togglePassword}/> Показать пароль
+                <button className="log-button" onClick={auth1}>
+                    Вход
+                </button>
             </div>
         </div>
     );

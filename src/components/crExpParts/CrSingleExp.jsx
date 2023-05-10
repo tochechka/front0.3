@@ -2,12 +2,13 @@ import React, {useState} from 'react';
 import '../../styles/Omp.css';
 import DeleteCrExp from "./DeleteCrExp";
 import ChangeCrExp from "./ChangeCrExp";
-import apiClient from "../../api";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const CrSingleExp = ({get, crimeExp, remove}) => {
     const [modalActive, setModalActive] = useState(false);
     const [deleteActive, setDeleteActive] = useState(false);
     const [modOmp, setModOmp] = useState([]);
+    const axiosPrivate = useAxiosPrivate();
 
     function date() {
         const localDate = new Date(crimeExp.date);
@@ -16,7 +17,7 @@ const CrSingleExp = ({get, crimeExp, remove}) => {
     }
 
     const openModal = () => {
-        apiClient
+        axiosPrivate
             .get('/omps')
             .then((response) => {
                 setModalActive(true);

@@ -1,13 +1,26 @@
 import React, {useEffect, useState} from 'react';
-import apiClient from "../../api";
-import CrExpTop from "../crExpParts/CrExpTop";
 import CrExpList from "../crExpParts/CrExpList";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import Header from "../Header";
+import CreateCrExp from "../crExpParts/CreateCrExp";
 
 const CrimeExp = () => {
     const [crimeExps, setCrimeExps] = useState([]);
+    const [modalActive, setModalActive] = useState(false);
+    const [omp, setOmp] = useState([])
+    const axiosPrivate = useAxiosPrivate();
+
+    const openModal = () => {
+        axiosPrivate
+            .get('/omps')
+            .then((response) => {
+                setModalActive(true);
+                setOmp(response.data.content);
+            })
+    }
 
     const getCrExp = () => {
-        apiClient
+        axiosPrivate
             .get('/expertises/crime')
             .then((response) => {
                 setCrimeExps(response.data.content)
@@ -17,7 +30,7 @@ const CrimeExp = () => {
     }
 
     const removeCrExp = (crimeExp) => {
-        apiClient
+        axiosPrivate
             .delete(`/expertises/crime/${crimeExp.id}`)
             .then(() => {
                 console.log('Удалилось')
@@ -31,8 +44,27 @@ const CrimeExp = () => {
 
     return (
         <div>
-            <CrExpTop get={getCrExp}/>
-            <CrExpList remove={removeCrExp} get={getCrExp} crimeExps={crimeExps}/>
+            <Header/>
+            <div style={{display: "flex", paddingTop: 10}}>
+                <div className='left-col'>
+                    <div align='center'>
+                        <span>Действия</span>
+                    </div>
+                    <button className='action'  onClick={openModal}>
+                        Добавить новую экспертизу
+                    </button>
+                </div>
+                <div style={{marginLeft: 50}}>
+                    <div className='omp-top-text'>Список криминалистических экспертиз</div>
+                    <CrExpList remove={removeCrExp} get={getCrExp} crimeExps={crimeExps}/>
+                </div>
+            </div>
+            <CreateCrExp
+                get={getCrExp}
+                omp={omp}
+                active={modalActive}
+                setActive={setModalActive}
+            />
         </div>
     );
 };

@@ -1,19 +1,28 @@
 import { Route, Routes} from 'react-router-dom';
 import PrivateRoute from './PrivateRoute'
 import Auth from "../components/pages/Auth";
-import Menu from "../components/pages/Menu";
 import Omp from "../components/pages/Omp";
 import CrimeExp from "../components/pages/CrimeExp";
+import Table from "./Table";
+import PdfPage from "../components/pages/PdfPage";
 
 const AppRouter = () => {
     return (
         <Routes>
             <Route path="/" element={<Auth />}/>
             <Route
-                path="/menu"
+                path="/table"
                 element={(
                     <PrivateRoute>
-                        <Menu />
+                        <Table />
+                    </PrivateRoute>
+                )}
+            />
+            <Route
+                path="/expertises/crime"
+                element={(
+                    <PrivateRoute>
+                        <CrimeExp />
                     </PrivateRoute>
                 )}
             />
@@ -26,10 +35,10 @@ const AppRouter = () => {
                 )}
             />
             <Route
-                path="/expertises/crime"
+                path="/test"
                 element={(
                     <PrivateRoute>
-                        <CrimeExp />
+                        <PdfPage />
                     </PrivateRoute>
                 )}
             />

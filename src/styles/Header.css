@@ -1,0 +1,65 @@
+.head {
+    background-color: dodgerblue;
+    position: sticky;
+    top: 0;
+}
+
+.top-text{
+    color: white;
+    font-family: sans-serif;
+    font-size: 30px;
+}
+
+.navigate {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.element1 {
+    display: flex;
+    color: white;
+    margin: 10px;
+    height: 28px;
+    align-items: center;
+}
+
+.text {
+    font-family: sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.icon {
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+}
+
+.button {
+    color: white;
+    min-width: 80px;
+    height: 20px;
+    border: none;
+    margin-left: 10px;
+    cursor: pointer;
+    background-color: rgba(34, 255, 168, 0.7);
+    font-family: sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.button-active {
+    color: white;
+    min-width: 80px;
+    height: 20px;
+    border: none;
+    margin-left: 10px;
+    cursor: pointer;
+    background-color: rgba(34, 255, 168, 0.3);
+    font-family: sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+}

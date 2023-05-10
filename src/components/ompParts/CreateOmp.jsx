@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
 import '../../styles/Modal.css'
 import '../../styles/CreateOmp.css'
-import apiClient from "../../api";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
-const CreateOmp = ({get, active, setActive}) => {
+const CreateOmp = ({get, type, omvd, active, setActive}) => {
+    const axiosPrivate = useAxiosPrivate();
     const [date, setDate] = useState('');
     const [dep, setDep] = useState('');
     const [arr, setArr] = useState('');
-    const [omvd, setOmvd] = useState('');
+    const [modOmvd, setModOmvd] = useState('');
     const [number, setNumber] = useState('');
-    const [type, setType] = useState('');
+    const [modType, setModType] = useState('');
     const [arm, setArm] = useState(false);
     const [shoe, setShoe] = useState(false);
     const [hack, setHack] = useState(false);
@@ -51,9 +52,9 @@ const CreateOmp = ({get, active, setActive}) => {
             "date": date,
             "arrivalTime": arr,
             "departureTime": dep,
-            "omvd": omvd,
+            "omvd": modOmvd,
             "criminalCaseNumber": number,
-            "crimeType": type,
+            "crimeType": modType,
             "withdrawalsHandprints": arm,
             "withdrawalsShoeTracks": shoe,
             "withdrawalsHackingTracks": hack,
@@ -68,7 +69,7 @@ const CreateOmp = ({get, active, setActive}) => {
             "withdrawalsOther": true
         }
 
-        apiClient
+        axiosPrivate
             .post('/omps', info)
             .then((response) => {
                 setActive(false);
@@ -89,6 +90,7 @@ const CreateOmp = ({get, active, setActive}) => {
                             onChange={e => setDate(e.target.value)}
                             className='add-input'
                             type='date'
+                            max='9999-12-31'
                         />
                         <div className='add-text'>
                             Время отправления
@@ -111,12 +113,16 @@ const CreateOmp = ({get, active, setActive}) => {
                         <div className='add-text'>
                             Название омвд
                         </div>
-                        <input
-                            value={omvd}
-                            onChange={e => setOmvd(e.target.value)}
-                            className='add-input'
-                            type='text'
-                        />
+                        <select
+                            onChange={e => setModOmvd(e.target.value)}
+                        >
+                            <option value=''>Номер омвд</option>
+                            {omvd.map(om =>
+                                <option key={om.value} value={om.value}>
+                                    {om.value}
+                                </option>
+                            )}
+                        </select>
                         <div className='add-text'>
                             Номер дела
                         </div>
@@ -129,12 +135,16 @@ const CreateOmp = ({get, active, setActive}) => {
                         <div className='add-text'>
                             Тип преступления
                         </div>
-                        <input
-                            value={type}
-                            onChange={e => setType(e.target.value)}
-                            className='add-input'
-                            type='text'
-                        />
+                        <select
+                            onChange={e => setModType(e.target.value)}
+                        >
+                            <option value=''>Тип преступления</option>
+                            {type.map(t =>
+                                <option key={t.value} value={t.value}>
+                                    {t.value}
+                                </option>
+                            )}
+                        </select>
                     </div>
                     <div className='add-box'>
                         <div className='check-input' onClick={toggleArm}>Рук следы <input type='checkbox'/></div>

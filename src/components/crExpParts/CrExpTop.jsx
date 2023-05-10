@@ -1,12 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
+import CreateCrExp from "./CreateCrExp";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const CrExpTop = ({get}) => {
     const history = useNavigate();
+    const [modalActive, setModalActive] = useState(false);
+    const [omp, setOmp] = useState([])
+    const axiosPrivate = useAxiosPrivate();
 
-    function back() {
-        return history('/menu')
-    };
+    const openModal = () => {
+        axiosPrivate
+            .get('/omps')
+            .then((response) => {
+                setModalActive(true);
+                setOmp(response.data.content);
+            })
+    }
 
     return (
         <div>
@@ -18,12 +28,16 @@ const CrExpTop = ({get}) => {
                     />
                 </div>
                 <div style={{marginRight: '20px'}}>
-                    <button className='top-button'> Добавить новую экспертизу </button>
-                    <button className='top-button' onClick={back}> Назад </button>
-                    <button className='top-button'> Выйти </button>
+                    <button className='top-button' onClick={openModal}> Добавить новую экспертизу </button>
                 </div>
             </div>
             <hr className='line'/>
+            <CreateCrExp
+                get={get}
+                omp={omp}
+                active={modalActive}
+                setActive={setModalActive}
+            />
         </div>
     );
 };
