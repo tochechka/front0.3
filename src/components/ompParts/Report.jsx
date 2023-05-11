@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import '../../styles/Modal.css'
 import '../../styles/Report.css'
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const Report = ({active, setActive}) => {
     const [from, setFrom] = useState('');

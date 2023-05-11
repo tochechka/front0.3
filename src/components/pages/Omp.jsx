@@ -45,6 +45,7 @@ const Omp = () => {
         getRequest();
         getCrType();
         getOmvd();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const removeOmp = (omp) => {
