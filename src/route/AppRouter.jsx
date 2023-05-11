@@ -4,7 +4,6 @@ import Auth from "../components/pages/Auth";
 import Omp from "../components/pages/Omp";
 import CrimeExp from "../components/pages/CrimeExp";
 import Table from "./Table";
-import PdfPage from "../components/pages/PdfPage";
 
 const AppRouter = () => {
     return (
@@ -31,14 +30,6 @@ const AppRouter = () => {
                 element={(
                     <PrivateRoute>
                         <Omp />
-                    </PrivateRoute>
-                )}
-            />
-            <Route
-                path="/test"
-                element={(
-                    <PrivateRoute>
-                        <PdfPage />
                     </PrivateRoute>
                 )}
             />
