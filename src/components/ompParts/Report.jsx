@@ -6,18 +6,6 @@ import useAxiosPrivate from "../hooks/useAxiosPrivate";
 const Report = ({active, setActive}) => {
     const [from, setFrom] = useState('');
     const [to, setTo] = useState('');
-    const axiosPrivate = useAxiosPrivate();
-
-    // const report = (e) => {
-    //     e.preventDefault();
-    //     axiosPrivate
-    //         .get(`/reports/omp?from=${from}&to=${to}`)
-    //         .then((response) => {
-    //             window.open(response.data);
-    //         })
-    //         .catch(() => {
-    //         });
-    // }
 
     return (
         <div className={active ? 'modal active' : 'modal'} onClick={() => setActive(false)}>
@@ -46,7 +34,7 @@ const Report = ({active, setActive}) => {
                     </div>
                     <a className='fake-button' onClick={() => setActive(false)}
                        href={`https://api.forensicais.xxcf.cf/reports/omp?from=${from}&to=${to}`} target="_blank" rel="noopener noreferrer">
-                        Gjkexbnm jnxtn
+                        Получить отчет
                     </a>
                 </div>
             </div>
