@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
-const CreateCrExp = ({active, setActive, get, omp}) => {
+const CreateCrExp = ({active, setActive, get, omp, type, omvd}) => {
     const [modOmvd, setModOmvd] = useState('');
     const [modOmp, setModOmp] = useState('');
     const [modDate, setModDate] = useState('');
@@ -38,12 +38,16 @@ const CreateCrExp = ({active, setActive, get, omp}) => {
                     <div className='add-text'>
                         Название омвд
                     </div>
-                    <input
-                        value={modOmvd}
+                    <select
                         onChange={e => setModOmvd(e.target.value)}
-                        className='add-input'
-                        type='text'
-                    />
+                    >
+                        <option value=''>Номер омвд</option>
+                        {omvd.map(om =>
+                            <option key={om.value} value={om.value}>
+                                {om.value}
+                            </option>
+                        )}
+                    </select>
                     <div className='add-text'>
                         Номер ОМП
                     </div>
@@ -78,12 +82,16 @@ const CreateCrExp = ({active, setActive, get, omp}) => {
                     <div className='add-text'>
                         Тип экспертизы
                     </div>
-                    <input
-                        value={modTYpe}
+                    <select
                         onChange={e => setModType(e.target.value)}
-                        className='add-input'
-                        type='text'
-                    />
+                    >
+                        <option value=''>Тип экспертизы</option>
+                        {type.map(t =>
+                            <option key={t.value} value={t.value}>
+                                {t.value}
+                            </option>
+                        )}
+                    </select>
                 </div>
                 <button style={{marginTop: 20}} onClick={postExp} className='change-button'> Сохранить </button>
             </div>

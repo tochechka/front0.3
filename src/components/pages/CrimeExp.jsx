@@ -7,7 +7,9 @@ import CreateCrExp from "../crExpParts/CreateCrExp";
 const CrimeExp = () => {
     const [crimeExps, setCrimeExps] = useState([]);
     const [modalActive, setModalActive] = useState(false);
-    const [omp, setOmp] = useState([])
+    const [omp, setOmp] = useState([]);
+    const [omvd, setOmvd] = useState([]);
+    const [type, setType] = useState([]);
     const axiosPrivate = useAxiosPrivate();
 
     const openModal = () => {
@@ -29,6 +31,24 @@ const CrimeExp = () => {
             })
     }
 
+    const getOmvd = async () => {
+        axiosPrivate
+            .get('/directories/OMVD/items')
+            .then((response) => {
+                setOmvd(response.data)
+                console.log(response.data)
+            })
+    }
+
+    const getExpType = async () => {
+        axiosPrivate
+            .get('/directories/EXPERTISE_TYPE/items')
+            .then((response) => {
+                setType(response.data)
+                console.log(response.data)
+            })
+    }
+
     const removeCrExp = (crimeExp) => {
         axiosPrivate
             .delete(`/expertises/crime/${crimeExp.id}`)
@@ -40,6 +60,8 @@ const CrimeExp = () => {
 
     useEffect(() => {
         getCrExp();
+        getOmvd();
+        getExpType();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -63,6 +85,8 @@ const CrimeExp = () => {
             <CreateCrExp
                 get={getCrExp}
                 omp={omp}
+                omvd={omvd}
+                type={type}
                 active={modalActive}
                 setActive={setModalActive}
             />
