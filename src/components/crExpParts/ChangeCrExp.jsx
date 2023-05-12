@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 import '../../styles/CreateOmp.css'
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
-const ChangeCrExp = ({id, get, omvd, type, date, active, setActive, omp, lastName, ompId}) => {
-    const [modOmvd, setModOmvd] = useState(omvd);
+const ChangeCrExp = ({id, get, curOmvd, curType, date, active, setActive, omp, lastName, ompId, type, omvd}) => {
+    const [modOmvd, setModOmvd] = useState(curOmvd);
     const [modOmp, setModOmp] = useState(ompId);
     const [modDate, setModDate] = useState(date);
     const [modLastName, setModLastName] = useState(lastName);
-    const [modTYpe, setModType] = useState(type);
+    const [modTYpe, setModType] = useState(curType);
     const axiosPrivate = useAxiosPrivate();
 
     const putExp = (e) => {
@@ -42,12 +42,16 @@ const ChangeCrExp = ({id, get, omvd, type, date, active, setActive, omp, lastNam
                     <div className='add-text'>
                         Название омвд
                     </div>
-                    <input
-                        value={modOmvd}
+                    <select
                         onChange={e => setModOmvd(e.target.value)}
-                        className='add-input'
-                        type='text'
-                    />
+                    >
+                        <option disabled value=''>Название омвд</option>
+                        {omvd.map(om =>
+                            <option key={om.value} value={om.value}>
+                                {om.value}
+                            </option>
+                        )}
+                    </select>
                     <div className='add-text'>
                         Номер ОМП
                     </div>
@@ -82,12 +86,16 @@ const ChangeCrExp = ({id, get, omvd, type, date, active, setActive, omp, lastNam
                     <div className='add-text'>
                         Тип экспертизы
                     </div>
-                    <input
-                        value={modTYpe}
+                    <select
                         onChange={e => setModType(e.target.value)}
-                        className='add-input'
-                        type='text'
-                    />
+                    >
+                        <option disabled value=''>Тип экспеотизы</option>
+                        {type.map(t =>
+                            <option key={t.value} value={t.value}>
+                                {t.value}
+                            </option>
+                        )}
+                    </select>
                 </div>
                 <button style={{marginTop: 20}} onClick={putExp} className='change-button'> Сохранить </button>
             </div>

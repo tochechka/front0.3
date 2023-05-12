@@ -117,7 +117,6 @@ const ChangeOmp = ({active, setActive, id, number, curOmvd, omvd, dep, arr, date
                         <div className='add-text'>
                             Название омвд
                         </div>
-
                         <select
                             onChange={e => setModOmvd(e.target.value)}
                         >

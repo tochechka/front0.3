@@ -4,7 +4,7 @@ import DeleteCrExp from "./DeleteCrExp";
 import ChangeCrExp from "./ChangeCrExp";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
-const CrSingleExp = ({get, crimeExp, remove}) => {
+const CrSingleExp = ({get, crimeExp, remove, type, omvd}) => {
     const [modalActive, setModalActive] = useState(false);
     const [deleteActive, setDeleteActive] = useState(false);
     const [modOmp, setModOmp] = useState([]);
@@ -27,14 +27,18 @@ const CrSingleExp = ({get, crimeExp, remove}) => {
 
     return (
         <div className='omp'>
+            <p className='omp-top'>
+                <p style={{margin: 0}}>Название омвд: {crimeExp.omvd}</p>
+                <p style={{margin: 0}}>Дата {date()}</p>
+            </p>
             <div className='omp-row'>
                 <div>
-                    <strong>Название омвд: {crimeExp.omvd}. | {date()} | Фамимлия преступника: {crimeExp.suspectLastname} | Тип экспертизы: {crimeExp.expertiseType}</strong>
+                    <strong>Фамимлия преступника: {crimeExp.suspectLastname} | Тип экспертизы: {crimeExp.expertiseType}</strong>
                 </div>
-                <div>
-                    <button onClick={openModal} style={{marginRight: 10}}>Изменить</button>
-                    <button onClick={() => setDeleteActive(true)}>Удалить</button>
-                </div>
+            </div>
+            <div className='omp-row'>
+                <button onClick={openModal} className='omp-button' style={{marginRight: 10}}>Изменить</button>
+                <button onClick={() => setDeleteActive(true)} className='omp-button'>Удалить</button>
             </div>
             <ChangeCrExp
                 active={modalActive}
@@ -43,10 +47,12 @@ const CrSingleExp = ({get, crimeExp, remove}) => {
                 id={crimeExp.id}
                 ompId={crimeExp.ompId}
                 omp={modOmp}
-                omvd={crimeExp.omvd}
+                curOmvd={crimeExp.omvd}
+                omvd={omvd}
                 date={crimeExp.date}
                 lastName={crimeExp.suspectLastname}
-                type={crimeExp.expertiseType}
+                curType={crimeExp.expertiseType}
+                type={type}
             />
             <DeleteCrExp
                 active={deleteActive}

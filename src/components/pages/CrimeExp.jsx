@@ -79,7 +79,7 @@ const CrimeExp = () => {
                 </div>
                 <div style={{marginLeft: 50}}>
                     <div className='omp-top-text'>Список криминалистических экспертиз</div>
-                    <CrExpList remove={removeCrExp} get={getCrExp} crimeExps={crimeExps}/>
+                    <CrExpList remove={removeCrExp} get={getCrExp} crimeExps={crimeExps} type={type} omvd={omvd}/>
                 </div>
             </div>
             <CreateCrExp
