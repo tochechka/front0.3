@@ -27,7 +27,6 @@ const CreateCrExp = ({active, setActive, get, omp, type, omvd}) => {
                 get();
             })
             .catch(() => {
-                console.log(info)
             });
     }
 

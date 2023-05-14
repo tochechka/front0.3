@@ -26,8 +26,6 @@ const CrimeExp = () => {
             .get('/expertises/crime')
             .then((response) => {
                 setCrimeExps(response.data.content)
-                console.log(response.data.content)
-                console.log('Загетили')
             })
     }
 
@@ -36,7 +34,6 @@ const CrimeExp = () => {
             .get('/directories/OMVD/items')
             .then((response) => {
                 setOmvd(response.data)
-                console.log(response.data)
             })
     }
 
@@ -45,7 +42,6 @@ const CrimeExp = () => {
             .get('/directories/EXPERTISE_TYPE/items')
             .then((response) => {
                 setType(response.data)
-                console.log(response.data)
             })
     }
 
@@ -53,7 +49,6 @@ const CrimeExp = () => {
         axiosPrivate
             .delete(`/expertises/crime/${crimeExp.id}`)
             .then(() => {
-                console.log('Удалилось')
                 setCrimeExps(crimeExps.filter(p => p.id !== crimeExp.id))
             })
     }

@@ -72,13 +72,10 @@ const ChangeOmp = ({active, setActive, id, number, curOmvd, omvd, dep, arr, date
         axiosPrivate
             .put(`/omps/${id}`, info)
             .then(() => {
-                console.log("Изменилось");
-                console.log(info);
                 setActive(false);
                 get();
             })
             .catch(() => {
-                console.log(info)
             });
     }
 

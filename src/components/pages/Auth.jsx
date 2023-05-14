@@ -38,9 +38,8 @@ const Auth = () => {
             .post('/auth/login', info)
             .then((response) =>{
                 const access_token = response.data.access_token;
-                const refresh_token = response.data.refresh_token;
-                setAuth({login, pwd, access_token, refresh_token});
-                console.log('Ура!!! Победа!')
+                localStorage.refresh_token = response.data.refresh_token;
+                setAuth({login, pwd, access_token});
                 history('/omp')
             })
             .catch((error) => {

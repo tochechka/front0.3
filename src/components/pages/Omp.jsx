@@ -19,7 +19,6 @@ const Omp = () => {
             .get('/omps')
             .then((response) => {
                 setOmps(response.data.content)
-                console.log(response.data.content)
             })
     }
 
@@ -28,7 +27,6 @@ const Omp = () => {
             .get('/directories/CRIME_TYPE/items')
             .then((response) => {
                 setType(response.data)
-                console.log(response.data)
             })
     }
 
@@ -37,7 +35,6 @@ const Omp = () => {
             .get('/directories/OMVD/items')
             .then((response) => {
                 setOmvd(response.data)
-                console.log(response.data)
             })
     }
 
@@ -52,7 +49,6 @@ const Omp = () => {
         axiosPrivate
             .delete(`omps/${omp.id}`)
             .then(() => {
-                console.log('Удалилось')
                 setOmps(omps.filter(p => p.id !== omp.id))
             })
     }

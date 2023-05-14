@@ -25,13 +25,10 @@ const ChangeCrExp = ({id, get, curOmvd, curType, date, active, setActive, omp, l
         axiosPrivate
             .put(`/expertises/crime/${id}`, info)
             .then(() => {
-                console.log("Изменилось");
-                console.log(info);
                 setActive(false);
                 get();
             })
             .catch(() => {
-                console.log(info)
             });
     }
 
