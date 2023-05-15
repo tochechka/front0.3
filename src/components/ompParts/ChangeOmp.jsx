@@ -117,7 +117,7 @@ const ChangeOmp = ({active, setActive, id, number, curOmvd, omvd, dep, arr, date
                         <select
                             onChange={e => setModOmvd(e.target.value)}
                         >
-                            <option disabled value=''>Номер омвд</option>
+                            <option disabled value=''>Название омвд</option>
                             {omvd.map(om =>
                                 <option key={om.value} value={om.value}>
                                     {om.value}

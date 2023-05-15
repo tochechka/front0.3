@@ -53,7 +53,7 @@ const CreateCrExp = ({active, setActive, get, omp, type, omvd}) => {
                     <select
                         onChange={e => setModOmp(e.target.value)}
                     >
-                        <option disabled value=''>Номер овмд</option>
+                        <option value=''>Название овмд</option>
                         {omp.map(o =>
                             <option key={o.id} value={o.id}>
                                 {o.criminalCaseNumber}

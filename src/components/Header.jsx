@@ -11,6 +11,7 @@ const Header = () => {
 
     const out = () => {
         setAuth({});
+        localStorage.refresh_token = '';
         return history('/');
     }
 
