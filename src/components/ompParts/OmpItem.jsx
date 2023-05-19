@@ -2,10 +2,13 @@ import React, {useState} from 'react';
 import '../../styles/Omp.css'
 import ChangeOmp from "./ChangeOmp";
 import DeleteOmp from "./DeleteOmp";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 const OmpItem = (props) => {
     const [modalActive, setModalActive] = useState(false);
     const [deleteActive, setDeleteActive] = useState(false);
+    const [type, setType] = useState([]);
+    const [omvd, setOmvd] = useState([]);
     const arm = props.omp.withdrawalsHandprints ? "V" : "X";
     const shoe = props.omp.withdrawalsShoeTracks ? "V" : "X";
     const hack = props.omp.withdrawalsHackingTracks ? "V" : "X";
@@ -17,11 +20,34 @@ const OmpItem = (props) => {
     const bb = props.omp.withdrawalsBbWu ? "V" : "X";
     const fire = props.omp.withdrawalsFireTechnical ? "V" : "X";
     const bio = props.omp.withdrawalsBiological ? "V" : "X";
+    const axiosPrivate = useAxiosPrivate();
 
     function date() {
         const localDate = new Date(props.omp.date);
         const localTimeString = localDate.toLocaleDateString();
         return localTimeString;
+    }
+
+    const getCrType = async () => {
+        axiosPrivate
+            .get('/directories/CRIME_TYPE/items')
+            .then((response) => {
+                setType(response.data)
+            })
+    }
+
+    const getOmvd = async () => {
+        axiosPrivate
+            .get('/directories/OMVD/items')
+            .then((response) => {
+                setOmvd(response.data)
+            })
+    }
+
+    const openModal = () => {
+        getOmvd();
+        getCrType();
+        setModalActive(true)
     }
 
     return (
@@ -47,7 +73,7 @@ const OmpItem = (props) => {
                 </div>
             </div>
             <div className='omp-row'>
-                <button onClick={() => setModalActive(true)} className='omp-button' style={{marginRight: 10}}>Изменить</button>
+                <button onClick={openModal} className='omp-button' style={{marginRight: 10}}>Изменить</button>
                 <button onClick={() => setDeleteActive(true)} className='omp-button'>Удалить</button>
             </div>
             <ChangeOmp
@@ -56,12 +82,12 @@ const OmpItem = (props) => {
                 id={props.omp.id}
                 number={props.omp.criminalCaseNumber}
                 curOmvd={props.omp.omvd}
-                omvd={props.omvd}
+                omvd={omvd}
                 dep={props.omp.departureTime}
                 arr={props.omp.arrivalTime}
                 date={props.omp.date}
                 curType={props.omp.crimeType}
-                type={props.type}
+                type={type}
                 get={props.get}
                 dispatched={props.omp.dispatched}
             />

@@ -40,8 +40,6 @@ const Omp = () => {
 
     useEffect(() => {
         getRequest();
-        getCrType();
-        getOmvd();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -53,6 +51,12 @@ const Omp = () => {
             })
     }
 
+    const openModal = () => {
+        getCrType();
+        getOmvd();
+        setModalActive(true)
+    }
+
     return (
         <div>
             <Header/>
@@ -61,7 +65,7 @@ const Omp = () => {
                     <div align='center'>
                         <span>Действия</span>
                     </div>
-                    <button className='action'  onClick={() => setModalActive(true)}>
+                    <button className='action'  onClick={openModal}>
                         Добавить новую запись
                     </button>
                     <button className='action' onClick={() => setReportActive(true)}>
@@ -70,7 +74,7 @@ const Omp = () => {
                 </div>
                 <div style={{marginLeft: 50}}>
                     <div className='omp-top-text'>Список осмотров мест преступлений</div>
-                    <OmpList remove={removeOmp} get={getRequest} omps={omps} type={type} omvd={omvd}/>
+                    <OmpList remove={removeOmp} get={getRequest} omps={omps}/>
                 </div>
             </div>
             <CreateOmp
